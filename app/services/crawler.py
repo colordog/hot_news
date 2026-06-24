@@ -97,6 +97,7 @@ def run_data_analysis(date_str: str):
         # 导入分析模块（在这里导入避免循环依赖）
         from app.analysis.trend_analyzer import TrendAnalyzer
         from app.analysis.predictor import TrendPredictor
+        from app.llm import HotSummaryService
         
         # 创建分析器实例
         analyzer = TrendAnalyzer()
@@ -133,6 +134,10 @@ def run_data_analysis(date_str: str):
         # 8. 生成趋势预测分析数据并缓存
         log.info("Generating trend forecast data...")
         analyzer.get_trend_forecast(date_str, refresh=True)
+
+        # 9. 生成 LLM 热点总结并缓存
+        log.info("Generating LLM hot summary...")
+        HotSummaryService().generate_summary(date_str)
         
         log.info(f"All data analysis completed for date {date_str}")
     except Exception as e:

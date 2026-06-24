@@ -64,3 +64,15 @@ scheduler:
   max_instances: 2
   misfire_grace_time: 300
   timezone: "Asia/Shanghai"
+
+llm:
+  enabled: false
+  provider: "openai-compatible"
+  base_url: "https://www.xxxx.com/v1"
+  api_key: "xxxxxx"
+  model: "DeepSeek-V4-Pro"
+  timeout: 60
+  temperature: 0.3
+  max_tokens: 1200
+  summary_expire: 0
+  news_limit: 80
