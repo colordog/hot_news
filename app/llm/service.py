@@ -13,6 +13,7 @@ from app.utils.logger import log
 
 
 SHANGHAI_TZ = pytz.timezone("Asia/Shanghai")
+PER_PLATFORM_NEWS_LIMIT = 10
 
 
 class HotSummaryService:
@@ -99,7 +100,7 @@ class HotSummaryService:
             prompt_version=PROMPT_VERSION,
             metadata={
                 "provider": self.llm_config.provider,
-                "news_limit": self.llm_config.news_limit,
+                "per_platform_news_limit": PER_PLATFORM_NEWS_LIMIT,
             },
         ).dict()
 
@@ -124,9 +125,10 @@ class HotSummaryService:
             parts = key.split(":")
             platform = parts[1] if len(parts) >= 3 else "unknown"
             platform_news = cache.get_cache(key) or []
+            platform_count = 0
             for news in platform_news:
-                if len(collected_items) >= self.llm_config.news_limit:
-                    return collected_items
+                if platform_count >= PER_PLATFORM_NEWS_LIMIT:
+                    break
                 if not isinstance(news, dict):
                     continue
                 collected_items.append(
@@ -139,6 +141,7 @@ class HotSummaryService:
                         rank=news.get("rank"),
                     )
                 )
+                platform_count += 1
         return [item for item in collected_items if item.title]
 
     def _get_previous_summary(self, date_str: str) -> Optional[Dict[str, Any]]:
