@@ -37,6 +37,7 @@ class OpenAICompatibleClient:
             "messages": messages,
             "temperature": self.config.temperature if temperature is None else temperature,
             "max_tokens": self.config.max_tokens if max_tokens is None else max_tokens,
+            "thinking": {"type": "disabled"},
         }
 
         response = requests.post(
@@ -45,7 +46,6 @@ class OpenAICompatibleClient:
             json=payload,
             timeout=self.config.timeout,
         )
-        response.raise_for_status()
         response_data = response.json()
 
         choices = response_data.get("choices") or []

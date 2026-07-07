@@ -75,4 +75,5 @@ llm:
   temperature: 0.3
   max_tokens: 1200
   summary_expire: 0
-  news_limit: 80
+  summary_platforms: []
+  summary_platform_news_limit: 10

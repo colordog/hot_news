@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -25,7 +25,4 @@ class HotSummaryResult(BaseModel):
     previous_summary_date: Optional[str] = None
     news_count: int = 0
     platforms: List[str] = Field(default_factory=list)
-    model: str = ""
     generated_at: str = ""
-    prompt_version: str = "v1"
-    metadata: Dict[str, Any] = Field(default_factory=dict)

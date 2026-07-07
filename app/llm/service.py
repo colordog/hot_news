@@ -7,13 +7,12 @@ from app.core import cache
 from app.core.config import LLMConfig, get_llm_config
 from app.db.redis import get_redis_client
 from app.llm.client import OpenAICompatibleClient
-from app.llm.prompts import PROMPT_VERSION, build_hot_summary_messages
+from app.llm.prompts import build_hot_summary_messages
 from app.llm.schemas import HotNewsItem, HotSummaryResult
 from app.utils.logger import log
 
 
 SHANGHAI_TZ = pytz.timezone("Asia/Shanghai")
-PER_PLATFORM_NEWS_LIMIT = 10
 
 
 class HotSummaryService:
@@ -95,13 +94,7 @@ class HotSummaryService:
             previous_summary_date=previous_summary.get("date") if previous_summary else None,
             news_count=len(news_items),
             platforms=sorted({item.platform for item in news_items}),
-            model=self.llm_config.model,
             generated_at=datetime.now(SHANGHAI_TZ).isoformat(),
-            prompt_version=PROMPT_VERSION,
-            metadata={
-                "provider": self.llm_config.provider,
-                "per_platform_news_limit": PER_PLATFORM_NEWS_LIMIT,
-            },
         ).dict()
 
         self._save_summary(date_str, result)
@@ -120,14 +113,18 @@ class HotSummaryService:
             else:
                 normalized_keys.append(key)
 
+        selected_platforms = set(self.llm_config.summary_platforms or [])
+
         collected_items: List[HotNewsItem] = []
         for key in sorted(normalized_keys):
             parts = key.split(":")
             platform = parts[1] if len(parts) >= 3 else "unknown"
+            if selected_platforms and platform not in selected_platforms:
+                continue
             platform_news = cache.get_cache(key) or []
             platform_count = 0
             for news in platform_news:
-                if platform_count >= PER_PLATFORM_NEWS_LIMIT:
+                if platform_count >= self.llm_config.summary_platform_news_limit:
                     break
                 if not isinstance(news, dict):
                     continue

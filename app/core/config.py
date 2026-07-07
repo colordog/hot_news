@@ -68,7 +68,8 @@ class LLMConfig(BaseModel):
     temperature: float = 0.3
     max_tokens: int = 1200
     summary_expire: int = 0
-    news_limit: int = 80
+    summary_platforms: List[str] = Field(default_factory=list)
+    summary_platform_news_limit: int = 10
 
 class NotificationConfig(BaseModel):
     dingtalk: Dict[str, Any] = Field(default_factory=dict)
