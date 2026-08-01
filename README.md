@@ -14,7 +14,7 @@
 
 每日热点新闻 API 提供来自多个平台的实时热点新闻数据。数据大约每半小时自动刷新一次。此 API 可用于检索热点新闻标题及其 URL 和评分。
 
-- **基础 URL**: `https://orz.ai/api/v1/dailynews`
+- **基础 URL**: `https://news.orz.ai/api/v1/dailynews`
 
 ## 支持平台
 
@@ -56,7 +56,7 @@
 
 - **请求示例**:
   ```shell
-  GET https://orz.ai/api/v1/dailynews/?platform=baidu
+  GET https://news.orz.ai/api/v1/dailynews/?platform=baidu
   ```
 
 - **响应示例**:
@@ -102,11 +102,11 @@
 
 ## 网站基础信息接口
 
-[https://orz.ai/api/v1/tools/website-meta/?url=https://v2ex.com/](https://orz.ai/api/v1/tools/website-meta/?url=https://v2ex.com/)
+[https://news.orz.ai/api/v1/tools/website-meta/?url=https://v2ex.com/](https://orz.ai/api/v1/tools/website-meta/?url=https://v2ex.com/)
 
 使用方法：`GET`
 ```shell
-GET https://orz.ai/api/v1/tools/website-meta/?url=https://v2ex.com/
+GET https://news.orz.ai/api/v1/tools/website-meta/?url=https://v2ex.com/
 
 {
   "status": "200",

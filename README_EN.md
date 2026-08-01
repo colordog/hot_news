@@ -14,7 +14,7 @@
 
 The Daily Hot News API provides access to real-time hot news data from various platforms. The data is refreshed automatically about every half an hour. This API can be used to retrieve hot news headlines along with their URLs and scores.
 
-- **Base URL**: `https://orz.ai/api/v1/dailynews`
+- **Base URL**: `https://news.orz.ai/api/v1/dailynews`
 
 ## Supported Platforms
 
@@ -58,7 +58,7 @@ We currently support trending content from the following platforms:
 
 - **Example Request**:
   ```shell
-  GET https://orz.ai/api/v1/dailynews/?platform=baidu
+  GET https://news.orz.ai/api/v1/dailynews/?platform=baidu
   ```
 
 - **Example Response**:
@@ -107,7 +107,7 @@ If you want to deploy the bot by yourself, you should set the `TG_BOT_TOKEN` in 
 
 Method：`GET`
 ```shell
-GET https://orz.ai/api/v1/tools/website-meta/?url=https://v2ex.com/
+GET https://news.orz.ai/api/v1/tools/website-meta/?url=https://v2ex.com/
 
 {
   "status": "200",

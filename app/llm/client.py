@@ -37,7 +37,7 @@ class OpenAICompatibleClient:
             "messages": messages,
             "temperature": self.config.temperature if temperature is None else temperature,
             "max_tokens": self.config.max_tokens if max_tokens is None else max_tokens,
-            "thinking": {"type": "disabled"},
+            "chat_template_kwargs": {"thinking": False}
         }
 
         response = requests.post(
